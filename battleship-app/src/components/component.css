@@ -1,0 +1,18 @@
+#board {
+    flex-wrap: wrap;
+    width: 400px;
+    height: 400px;
+    background-color: white;
+  }
+
+.row {
+width: 110%;
+height: 10%;
+}
+
+  
+.col:hover {
+  background-color: #e6e6e6;
+}
+  
+  
