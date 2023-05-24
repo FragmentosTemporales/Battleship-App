@@ -12,6 +12,7 @@ function Home() {
         >
           New Game
         </Link>
+        <Link to="/cpu" className="btn btn-primary">CPU</Link>
       </header>
     </div>
   );
