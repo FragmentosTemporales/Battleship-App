@@ -1,18 +1,22 @@
 import injectContext from "./store/context";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./views/home";
+import Home from "./views/Home";
 import UserBoard from "./views/UserBoard";
-import CpuShowBoard from "./views/CpuBoard";
+import GameShowBoard from "./views/GameBoard";
 
 function App() {
   return (
-    <div className="bg-secondary">
+    <div 
+    style={{ background: "url(https://wallpapercave.com/wp/wp8818393.jpg)", backgroundPosition: "center",
+    backgroundRepeat: "no-repeat", }}
+
+    className="bg-secondary">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/game" element={<UserBoard />} />
-          <Route path="/cpu" element={<CpuShowBoard />} />
+          <Route path="/gameboard" element={<GameShowBoard />} />
         </Routes>
       </BrowserRouter>
     </div>

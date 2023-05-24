@@ -1,21 +1,36 @@
+import Swal from "sweetalert2";
+
 const getState = ({ setStore, getActions, getStore }) => {
   return {
     store: {
       ship: [],
       cpuShip: [],
+      userScore: 0,
+      cpuScore: 0,
+      cpuFires: [],
     },
     actions: {
       handleClick: (id, navigate) => {
         const { ship } = getStore();
 
         if (ship.includes(id)) {
-          alert("Casilla ya registrada");
+          Swal.fire({
+            icon: "warning",
+            title: "Casilla ya registrada",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         } else {
           const updatedShip = [...ship, id];
           setStore({ ship: updatedShip });
           if (updatedShip.length === 16) {
-            alert("Naves actualizadas");
-            navigate("/");
+            Swal.fire({
+              icon: "success",
+              title: "Flota actualizada",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/gameboard");
             getActions().setCpuShip(); // Llamada a setCpuShip después de navigate
           }
         }
@@ -37,8 +52,6 @@ const getState = ({ setStore, getActions, getStore }) => {
 
             cpuShip.push(position);
             cpuShip.push(position2);
-            console.log(position);
-            console.log(position2);
           } else if (i === 1) {
             let row = Math.floor(Math.random() * 7) + 1;
             let col = Math.floor(Math.random() * 9) + 1;
@@ -61,9 +74,6 @@ const getState = ({ setStore, getActions, getStore }) => {
             cpuShip.push(position);
             cpuShip.push(position2);
             cpuShip.push(position3);
-            console.log(position);
-            console.log(position2);
-            console.log(position3);
           } else if (i === 2) {
             let row = Math.floor(Math.random() * 9) + 1;
             let col = Math.floor(Math.random() * 7) + 1;
@@ -86,9 +96,6 @@ const getState = ({ setStore, getActions, getStore }) => {
             cpuShip.push(position4);
             cpuShip.push(position5);
             cpuShip.push(position6);
-            console.log(position4);
-            console.log(position5);
-            console.log(position6);
           } else if (i === 3) {
             let row = Math.floor(Math.random() * 6) + 1;
             let col = Math.floor(Math.random() * 9) + 1;
@@ -115,10 +122,6 @@ const getState = ({ setStore, getActions, getStore }) => {
             cpuShip.push(position8);
             cpuShip.push(position9);
             cpuShip.push(position10);
-            console.log(position7);
-            console.log(position8);
-            console.log(position9);
-            console.log(position10);
           } else {
             let row = Math.floor(Math.random() * 9) + 1;
             let col = Math.floor(Math.random() * 6) + 1;
@@ -145,10 +148,54 @@ const getState = ({ setStore, getActions, getStore }) => {
             cpuShip.push(position12);
             cpuShip.push(position13);
             cpuShip.push(position14);
-            console.log(position11);
-            console.log(position12);
-            console.log(position13);
-            console.log(position14);
+          }
+        }
+      },
+      fireTorpedo: (id, navigate) => {
+        const element = document.getElementById(id);
+        const { cpuShip, userScore } = getStore();
+
+        if (cpuShip.includes(id)) {
+          element.classList.add("bg-danger");
+          setStore({
+            userScore: userScore + 1,
+          });
+          if (userScore + 1 === 16) {
+            Swal.fire({
+              icon: "success",
+              title: "¡Haz Ganado!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/");
+          }
+        } else {
+          element.classList.add("bg-info");
+        }
+        getActions().cpuFire();
+      },
+      cpuFire: () => {
+        const { ship, cpuFires, cpuScore } = getStore();
+        let position = "";
+
+        do {
+          const row = Math.floor(Math.random() * 9) + 1;
+          const col = Math.floor(Math.random() * 8) + 1;
+          position = row.toString() + col.toString();
+        } while (cpuFires.includes(position));
+
+        cpuFires.push(position);
+
+        if (ship.includes(position)) {
+          const newCpuScore = cpuScore + 1;
+          setStore({ cpuScore: newCpuScore });
+          if (newCpuScore === 16) {
+            Swal.fire({
+              icon: "error",
+              title: "¡Haz perdido!",
+              showConfirmButton: false,
+              timer: 1500,
+            });
           }
         }
       },
