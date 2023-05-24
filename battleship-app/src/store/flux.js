@@ -1,7 +1,7 @@
 const getState = ({ setStore, getActions, getStore }) => {
   return {
     store: {
-      ship: ["22", "23", "33", "34", "44", "45", "55", "56", "66", "67", "77", "76", "75", "74", "73"],
+      ship: [],
       cpuShip: [],
     },
     actions: {
@@ -108,7 +108,7 @@ const getState = ({ setStore, getActions, getStore }) => {
               position7 = row.toString() + col.toString();
               position8 = (row + 1).toString() + col.toString();
               position9 = (row + 2).toString() + col.toString();
-              position10 = (row + 2).toString() + col.toString();
+              position10 = (row + 3).toString() + col.toString();
             }
 
             cpuShip.push(position7);
@@ -124,7 +124,7 @@ const getState = ({ setStore, getActions, getStore }) => {
             let col = Math.floor(Math.random() * 6) + 1;
             let position11 = row.toString() + col.toString();
             let position12 = row.toString() + (col + 1).toString();
-            let position13  = row.toString() + (col + 2).toString();
+            let position13 = row.toString() + (col + 2).toString();
             let position14 = row.toString() + (col + 3).toString();
 
             while (
